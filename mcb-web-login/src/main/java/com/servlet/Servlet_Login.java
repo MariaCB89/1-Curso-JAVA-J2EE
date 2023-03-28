@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.modelo.IUsuario_Fachada;
+import com.modelo.Usuario_Fachada;
+import com.modelo.Usuarios;
+
 /**
  * Servlet implementation class Servlet_Login
  */
@@ -40,6 +44,7 @@ public class Servlet_Login extends HttpServlet {
 	   String clave_usuario=peticion.getParameter("clave_usuario");
 	//2º CONVERSION - no necesaria en este caso
 	//3º VALIDACION -hay que hacerla CASI siempre
+
 	   if(nombre_usuario.isEmpty()) { //isEmpty devuelve true si el string está vacío
 		//GESTION DE ERROR
 		  valido=false;
@@ -55,6 +60,25 @@ public class Servlet_Login extends HttpServlet {
 	   //4ºLOGICA O NEGOCIO
 	  
 		if (valido) {
+			//USO DE LA CAPA MODELO PARA CONSULTAR LOS DATOS EN LA BBDD
+		
+			IUsuario_Fachada usuario_fachada = new Usuario_Fachada();
+			Usuarios usuario_consultado = usuario_fachada.consultar_PorNombre(nombre_usuario);
+			//LOGICA DE COMPROBACIÓN DE DATOS
+			if (usuario_consultado!=null) {
+				//USUARIO EXISTE
+				if(usuario_consultado.getPassword().equals(clave_usuario)) {
+					
+					
+					
+				}
+				
+			}else {
+				//ERROR-USUARIO NO EXISTE
+				
+				
+			}
+			salida="jsp/menu.jsp";
 			
 		}
 	   //5ºNAVEGACION
