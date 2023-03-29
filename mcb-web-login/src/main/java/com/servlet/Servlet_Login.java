@@ -66,11 +66,19 @@ public class Servlet_Login extends HttpServlet {
 			Usuarios usuario_consultado = usuario_fachada.consultar_PorNombre(nombre_usuario);
 			//LOGICA DE COMPROBACIÓN DE DATOS
 			if (usuario_consultado!=null) {
+				
 				//USUARIO EXISTE
 				if(usuario_consultado.getPassword().equals(clave_usuario)) {
-					
-					
-					
+				
+				//CREDENCIALES CORRECTAS	 
+				salida="jsp/menu.jsp";	
+				//INICIO DEL SEGUIMIENTO DE LA SESIÓN
+				//GUARDAMOS EL ATRIB. EN EL CONTEXTO NECESARIO
+				peticion.getSession().setAttribute("usuario", usuario_consultado);
+				
+				}else {
+				
+				//ERROR - CLAVE ERRONEA PARA EL USUARIO
 				}
 				
 			}else {
