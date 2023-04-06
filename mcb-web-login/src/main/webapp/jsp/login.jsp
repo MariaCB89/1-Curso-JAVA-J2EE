@@ -11,11 +11,13 @@
 		<table>
 		 <tr>
 		  <td>Nombre usuario</td>
-		  <td><input type="text" name="nombre_usuario"></td><%--el formulario envía este componente con un parámetro que hay que capturar--%>
+		  <td><input type="text" name="nombre_usuario" value="${param.nombre_usuario}"></td><%--el formulario envía este componente con un parámetro que hay que capturar--%>
+		  <td>${requestScope.error_nombre}</td>
 		 </tr>
 		 <tr>
 		  <td>Clave usuario</td>
-		  <td><input type="password" name="clave_usuario"></td><%--el formulario envía este componente con un parámetro que hay que capturar--%>
+		  <td><input type="password" name="clave_usuario" value="${param.clave_usuario}"></td><%--el formulario envía este componente con un parámetro que hay que capturar--%>
+		  <td>${requestScope.error_clave}</td>
 		 </tr>
 		 <tr>
 		  <td colspan="2"><input type="submit" name="Comprobar"></td><%--esto es el botón--%>

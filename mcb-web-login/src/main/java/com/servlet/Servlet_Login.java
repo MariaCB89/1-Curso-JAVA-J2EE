@@ -35,9 +35,11 @@ public class Servlet_Login extends HttpServlet {
 		throws ServletException, IOException {
 		// TODO Auto-generated method stub 
 		//mcb-pero request lo cambio por petición y response por respuesta
-	//PROPIEDADES LOCALES DEL METOD
+	//PROPIEDADES LOCALES DEL METODO
 		boolean valido=true;
 		String salida="jsp/login.jsp";
+		String error_nombre=null; //aqui guardaré el texto que quiero que se vea cuando haya error en el nombre
+		String error_clave=null; //aqui guardaré el texto que quiero que se vea cuando haya error en el nombre
 	//LO DESCRITO A PARTIR DE AQUI SIRVE PARA EL 99% DE CASOS DE LOGIN
 	//1º CAPTURO LO PARÁMETROS DE LA PETICIÓN. Con contexto > petición almacenado en una objeto tipo String que es lo unico que mueve el protc. html
 	   String nombre_usuario=peticion.getParameter("nombre_usuario");
@@ -47,15 +49,19 @@ public class Servlet_Login extends HttpServlet {
 
 	   if(nombre_usuario.isEmpty()) { //isEmpty devuelve true si el string está vacío
 		//GESTION DE ERROR
+		  error_nombre="Por favor, introduce tu nombre de usuario.";
 		  valido=false;
 		  }
 	   
 	   if (clave_usuario.equals("")){//equals también es true si está vacio
 		   
 		//GESTION DE ERROR
+		   error_clave="Por favor, introduce tu contraseña.";
 		   valido=false;   
 	   		}else if (clave_usuario.length()<5) {
-	   		valido=false;}
+	   		error_clave="La contraseña contener, mínimo, 5 caracteres.";
+	   		valido=false;
+	   		}
 			
 	   //4ºLOGICA O NEGOCIO
 	  
@@ -78,17 +84,31 @@ public class Servlet_Login extends HttpServlet {
 				
 				}else {
 				
+				
 				//ERROR - CLAVE ERRONEA PARA EL USUARIO
+				error_clave="Contraseña incorrecta";
 				}
 				
 			}else {
 				//ERROR-USUARIO NO EXISTE
-				
+				 error_nombre="No hay ningún usuario registrado con ese nombre";
 				
 			}
-			salida="jsp/menu.jsp";
+		
 			
 		}
+		
+		//LA POSIBLE INFO ACERCA DE LOS ERRORES SE PASAN COMO ATRIBUTOS DE PETICIÓN A LA PÁGINA JSP
+		
+		if(error_nombre !=null || error_clave != null) {
+			
+		  peticion.setAttribute("error_nombre",error_nombre);
+		  peticion.setAttribute("error_clave",error_clave);
+			
+			
+		}
+		
+		
 	   //5ºNAVEGACION
 		
 		RequestDispatcher navegacion=peticion.getRequestDispatcher(salida);
