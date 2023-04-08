@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,7 +34,8 @@ public class Servlet_Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest peticion, HttpServletResponse respuesta) 
 		throws ServletException, IOException {
-		// TODO Auto-generated method stub 
+		//CREAMOS EL RECURSO IDIOMATICO SEGUN PRFERENCIA DEL USUARIO
+		ResourceBundle rb=ResourceBundle.getBundle((String)peticion.getSession().getAttribute("idioma_elegido"));
 		//mcb-pero request lo cambio por petición y response por respuesta
 	//PROPIEDADES LOCALES DEL METODO
 		boolean valido=true;
@@ -49,17 +51,20 @@ public class Servlet_Login extends HttpServlet {
 
 	   if(nombre_usuario.isEmpty()) { //isEmpty devuelve true si el string está vacío
 		//GESTION DE ERROR
-		  error_nombre="Por favor, introduce tu nombre de usuario.";
-		  valido=false;
+		  //error_nombre="Por favor, introduce tu nombre de usuario.";
+		 error_nombre=rb.getString("login.error.nombrevacio");
+		   valido=false;
 		  }
 	   
 	   if (clave_usuario.equals("")){//equals también es true si está vacio
 		   
 		//GESTION DE ERROR
-		   error_clave="Por favor, introduce tu contraseña.";
+		   //error_clave="Por favor, introduce tu contraseña.";
+		   error_clave=rb.getString("login.error.clavevacio");
 		   valido=false;   
 	   		}else if (clave_usuario.length()<5) {
-	   		error_clave="La contraseña contener, mínimo, 5 caracteres.";
+	   		//error_clave="La contraseña contener, mínimo, 5 caracteres.";
+	   		error_clave=rb.getString("login.error.clavelargo");
 	   		valido=false;
 	   		}
 			
@@ -86,12 +91,14 @@ public class Servlet_Login extends HttpServlet {
 				
 				
 				//ERROR - CLAVE ERRONEA PARA EL USUARIO
-				error_clave="Contraseña incorrecta";
+				//error_clave="Contraseña incorrecta";
+				error_clave=rb.getString("login.error.claveerronea");
 				}
 				
 			}else {
 				//ERROR-USUARIO NO EXISTE
-				 error_nombre="No hay ningún usuario registrado con ese nombre";
+				 //error_nombre="No hay ningún usuario registrado con ese nombre";
+				error_nombre=rb.getString("login.error.clavevacio");
 				
 			}
 		
